@@ -3,6 +3,7 @@ import React from 'react'
 import './cart-dropdown.scss'
 import CartItem from '../cart-item/cart-item'
 import {connect} from 'react-redux'
+import {selectCartItems} from '../../redux/cart/cart.selectors'
 
 const CartDropDown = ({cartItems}) => (
     
@@ -14,8 +15,8 @@ const CartDropDown = ({cartItems}) => (
     </div>
 )
 
-const mapStateToProps=({cart:{cartItems}})=>({//make sure to destructure the cartItems
-    cartItems
+const mapStateToProps=(state)=>({//make sure to destructure the cartItems
+    cartItems:selectCartItems(state)
     })
 
 //you have access to dipatch in otherProps(when it is not passed as parameter),
