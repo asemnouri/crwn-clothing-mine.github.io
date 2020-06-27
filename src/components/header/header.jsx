@@ -6,6 +6,10 @@ import {auth} from '../../firebase/firebase.utils'
 import {connect} from 'react-redux'
 import CartIcon from '../cart-icon/cart-icon'
 import CartDropDown from '../cart-dropdown/cart-dropdown'
+import {selectCartHidden} from '../../redux/cart/cart.selectors'
+import {selectCurrentUser} from '../../redux/user/user.selectors'
+import { createStructuredSelector } from 'reselect';
+
 
 const Header=({currentUser,hidden})=>(
     <div className='header'>
@@ -32,9 +36,18 @@ const Header=({currentUser,hidden})=>(
 // })
 
 //another way of destrucuring
-const mapStateToProps=({user:{currentUser},cart:{hidden}})=>({
-   currentUser,
-   hidden
-    })
+//we pass the state because every thing is done in the reselect
+// const mapStateToProps=(state)=>({
+//    currentUser:selectCurrentUser(state),
+//    hidden:selectCartHidden(state)
+//     })
+
+//OR using structured selector
+//we pass an object
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    hidden: selectCartHidden
+  });
+ 
 
 export default connect(mapStateToProps)(Header)
