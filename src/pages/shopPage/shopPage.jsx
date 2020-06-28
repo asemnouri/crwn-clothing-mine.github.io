@@ -1,23 +1,23 @@
 import React from 'react'
 import './shopPage.scss'
-import PreviewCollection from '../../components/coolectionPreview/collectionPreview' 
-import {connect } from 'react-redux'
-import {selectShopCollections} from '../../redux/shop/shop.selectors'
-import { createStructuredSelector } from 'reselect';
+import {Route} from 'react-router-dom'
+import CollectionPage from '../collection/collection'
 
-const ShopPage =({collection})=>{
-  
-        return(
+
+import CollectionOverview from '../../components/collection-overview/collection-overview'
+
+const ShopPage =({match})=>{//we have access to match because shopePage is nested in a route in app.js
+          return(
             <div className='shop-page'>
-              {collection.map(({id,...othercollectionProps})=>(
-                <PreviewCollection key={id} {...othercollectionProps} />
-              ))}  
+             <Route exact path={`${match.path}`} component={CollectionOverview}/>
+             <Route path={`${match.path}/:categoryId`} component={CollectionPage}/>
+             
+             {/* path={`${match.path}/:catagoryId`} you can hardcode match.path by shop (this is nested  routes) */}
+             {/* match.path returns you the '/shop' */}
             </div>
         )
     }
 
-const mapStateToProps= createStructuredSelector({
-    collection: selectShopCollections,
-    });
 
-export default connect(mapStateToProps)(ShopPage)
+
+export default ShopPage
